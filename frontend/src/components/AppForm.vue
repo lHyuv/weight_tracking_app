@@ -7,6 +7,8 @@ export default {
 </script>
 <template>
 <form>
+<label class = 'form-label'> Name </label>
+<input id = 'weight' class = 'form-control' type = 'text' required placeholder = "Enter name..">
 <label class = 'form-label'> Weight </label>
 <input id = 'weight' class = 'form-control' type = 'number' step = '0.01' required placeholder = "Enter weight..">
 <label class = 'form-label'> Logs</label>

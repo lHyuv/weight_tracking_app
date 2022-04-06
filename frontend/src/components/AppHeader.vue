@@ -6,7 +6,10 @@
   <router-link class = "nav-link pr-3" to = "/"> Home</router-link>
   </li>&nbsp;
   <li class = "nav-item">
-  <router-link class = "nav-link" to = "/results"> Results</router-link>
+  <router-link class = "nav-link" to = "/table"> Table</router-link>
+  </li>&nbsp;
+  <li class = "nav-item">
+  <router-link class = "nav-link" to = "/graph"> Graph</router-link>
   </li>
   </ul>
   </header>

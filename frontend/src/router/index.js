@@ -8,11 +8,15 @@ const routes = [
     component: import('../views/Home.vue')
   },
   {
-    path: '/results',
-    name: 'Results',
-    component: import('../views/Results.vue')
+    path: '/table',
+    name: 'Table',
+    component: import('../views/Table.vue')
   },
-
+  {
+    path: '/graph',
+    name: 'Graph',
+    component: import('../views/Graph.vue')
+  },
 ]
 
 const router = createRouter({
