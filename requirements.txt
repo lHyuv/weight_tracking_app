@@ -6,3 +6,4 @@ express
 mongoose
 nodemon
 vue-router
+bootstrap
