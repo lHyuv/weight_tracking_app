@@ -1,0 +1,8 @@
+"@vue/cli@4.5.17"
+concurrently
+cors
+dotenv
+express
+mongoose
+nodemon
+vue-router
