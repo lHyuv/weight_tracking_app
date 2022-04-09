@@ -10,3 +10,4 @@ bootstrap
 axios
 chart.js
 moment
+datatables.net-dt

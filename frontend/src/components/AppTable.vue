@@ -9,10 +9,10 @@ Name
 Date
 </th>
 <th>
-Weight
+Status
 </th>
 <th>
-Status
+Weight
 </th>
 <th>
 Log
@@ -36,6 +36,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Env from "../assets/env.js";
 import axios from "axios";
 import moment from "moment";
+
+//datatable
+import "jquery/dist/jquery.min.js";
+import "datatables.net-dt";
+import $ from "jquery";
+
 export default {
   name: 'AppTable',
   data(){
@@ -75,6 +81,27 @@ export default {
       console.log(res.data.data)
       this.Weights = res.data;
       
+    })
+    .then(()=>{
+        $('table').DataTable().destroy();
+        $('table').dataTable({
+            "order": ["Status"],
+            "responsive" : true,
+            "autoWidth" : false,
+            "pageLength" : 10,
+            "bDestroy" : true,
+            "destroy" : true,
+            "serverSide" : false,
+            "bInfo" : false,
+            "info" : false,
+            "bPaginate" : true,
+            "bFilter" : true,
+            "lengthChange":true
+        });
+
+        $('.paginate_button').css('margin','2px');
+        $('.dataTables_filter').css('margin','2px')
+        $('input[type=search]').css('margin','2px')
     })
     .catch((err)=>{
       console.log(err)
