@@ -8,3 +8,5 @@ nodemon
 vue-router
 bootstrap
 axios
+chart.js
+moment

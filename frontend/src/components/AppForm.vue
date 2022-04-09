@@ -41,7 +41,7 @@ export default {
 <form @submit.prevent = "submitForm">
 <label class = 'form-label'> Name </label>
 <input  v-model = "weight.name" id = 'weight' class = 'form-control' type = 'text' required placeholder = "Enter name..">
-<label class = 'form-label'> Weight </label>
+<label class = 'form-label'> Weight <sub>( in kg )</sub> </label>
 <input v-model = "weight.current_weight" id = 'weight' class = 'form-control' type = 'number' step = '0.01' required placeholder = "Enter weight..">
 <label class = 'form-label'> Logs</label>
 <textarea v-model = "weight.log" id = 'logs' rows = '3'  class = 'form-control' placeholder = "Enter activities, foods, or any details you want to share..">
