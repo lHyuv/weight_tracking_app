@@ -8,7 +8,7 @@ export default {
   data(){
     return {
       weight : {
-        name: '',
+       // name: '',
         current_weight: '',
         log: ''
       }
@@ -23,7 +23,7 @@ export default {
       .then(()=>{
         this.$router.push('/table');
         this.weight = {
-          name: '',
+        //  name: '',
           current_weight: '',
           log: ''
         }
@@ -39,8 +39,10 @@ export default {
 </script>
 <template>
 <form @submit.prevent = "submitForm">
+<!--
 <label class = 'form-label'> Name </label>
 <input  v-model = "weight.name" id = 'weight' class = 'form-control' type = 'text' required placeholder = "Enter name..">
+-->
 <label class = 'form-label'> Weight <sub>( in kg )</sub> </label>
 <input v-model = "weight.current_weight" id = 'weight' class = 'form-control' type = 'number' step = '0.01' required placeholder = "Enter weight..">
 <label class = 'form-label'> Logs</label>

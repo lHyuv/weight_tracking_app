@@ -1,4 +1,5 @@
 <template>
+  <div>
   <header class = "navbar navbar-light justify-content-between flex-nowrap flex-row">
   <h1>Weight Tracking App</h1>
     <ul class = "nav navbar-nav flex-row float-right">
@@ -12,7 +13,10 @@
   <router-link class = "nav-link" to = "/graph"> Graph</router-link>
   </li>
   </ul>
+  
   </header>
+  <hr>
+</div>
 </template>
 
 <script>

@@ -1,10 +1,15 @@
 <template>
-<table class = 'table'>
+<table class = 'table table-striped'>
 <thead>
 <tr>
 <th>
+No
+</th>
+<!--
+<th>
 Name
 </th>
+-->
 <th>
 Date
 </th>
@@ -21,7 +26,10 @@ Log
 </thead>
 <tbody>
 <tr v-for = "weight  in Weights.data" :key="weight._id">
+<td><b>{{weight.no}}</b></td>
+<!--
 <td><b>{{weight.name}}</b></td>
+-->
 <td>{{weight.createdAt}}</td>
 <td><span :class = "weight.badge_class">{{weight.status}}</span></td>
 <td>{{weight.current_weight.toFixed(2)}} kg </td>
@@ -55,12 +63,18 @@ export default {
     .then((res)=>{
       console.log(res.data.data);
       res.data.data.map((val)=>{
-      val['createdAt'] = moment(val['createdAt']).format('MMMM Do YYYY');
+      val['createdAt'] = moment(val['createdAt']).format('MMMM Do YYYY, h:mm a') + " ("
+      + moment(val['createdAt']).fromNow() + ")";
       })
 
 
       //add status
       res.data.data.forEach((val,i)=>{
+        //add order no
+        res.data.data[i]["no"] = i+1;
+        if(val.log == "" || val.log == null){
+          res.data.data[i]["log"] = "N/A";
+        }
         if(i == 0){
           res.data.data[i]['status'] = 'Initial weight';
           res.data.data[i]['badge_class'] = 'badge bg-info';
@@ -78,6 +92,9 @@ export default {
           }
         }
       })
+
+      
+  
       console.log(res.data.data)
       this.Weights = res.data;
       
@@ -85,7 +102,7 @@ export default {
     .then(()=>{
         $('table').DataTable().destroy();
         $('table').dataTable({
-            "order": ["Status"],
+            "order": [0, "asc"],
             "responsive" : true,
             "autoWidth" : false,
             "pageLength" : 10,
