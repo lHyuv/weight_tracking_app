@@ -2,7 +2,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import Env from "../assets/env.js";
-
+import moment from "moment";
 export default {
   name: 'AppForm',
   data(){
@@ -15,6 +15,25 @@ export default {
     }
 
   
+  },
+  created(){
+    let date_arr = new Array();
+    const apiURL = Env.baseURL + "/active";
+    axios.get(apiURL)
+    .then((res)=>{
+      if(res.data.data.length != 0){
+        res.data.data.forEach((val)=>{
+          date_arr.push(moment(new Date(val.createdAt)).format("MMM Do YYYY"))
+        })
+      }
+      if(date_arr.includes(moment(new Date()).format("MMM Do YYYY"))){
+        this.$router.push('/table')
+      }
+
+    })
+    .catch((err)=>{
+      console.log(err);
+    })
   },
   methods : {
     submitForm(){
@@ -53,10 +72,14 @@ export default {
 
 </template>
 <style>
-.btn-success{
+button{
+ margin-bottom: 3px; 
+}
+#submit_btn{
   float: right;
   margin: 10px;
 }
+
 </style>
 
 

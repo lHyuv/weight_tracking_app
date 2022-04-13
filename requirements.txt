@@ -11,3 +11,4 @@ axios
 chart.js
 moment
 datatables.net-dt
+"@popperjs/core"

@@ -3,7 +3,7 @@
 <thead>
 <tr>
 <th>
-No
+Day
 </th>
 <!--
 <th>
@@ -58,7 +58,7 @@ export default {
     }
   },
   created(){
-    let apiURL = Env.baseURL;
+    let apiURL = Env.baseURL + '/active';
     axios.get(apiURL)
     .then((res)=>{
       console.log(res.data.data);

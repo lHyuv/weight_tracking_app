@@ -46,9 +46,9 @@ export default {
       Weights: [],
       title1: "Current Weight",
       value1: "",
-      title2: "No of times weight increased",
+      title2: "Days weight increased",
       value2: "",
-      title3: "No of times weight decreased",
+      title3: "Days weight decreased",
       value3: "",
       title4: "Total lost weight",
       value4: "",
@@ -57,7 +57,7 @@ export default {
     }
   },
   mounted(){
-    const apiURL = Env.baseURL;
+    const apiURL = Env.baseURL + '/active';
       let increased = 0;
       let decreased = 0;
       let initial = 0;
@@ -66,8 +66,10 @@ export default {
     axios.get(apiURL)
     .then((res)=>{
       this.Weights = res.data.data;
+       if(res.data.data.length > 0){
       current = this.Weights[this.Weights.length - 1].current_weight;
-
+    
+     
       res.data.data.map((val,i)=>{
         if(i != 0){
           if(val.current_weight > res.data.data[i - 1].current_weight){
@@ -78,15 +80,22 @@ export default {
         }else{
           initial = val.current_weight;
         }
-      
+     
+
+      })
+       }
+     
       lost = current - initial;
 
       this.value1 = current.toFixed(2) + " kg";
       this.value2 = increased;
       this.value3 = decreased;
       this.value4 = lost.toFixed(2) + " kg";
+      if(lost && initial){
       this.value5 = (lost / initial * 100).toFixed(2) + " %";
-      })
+      }else{
+        this.value5 = (0).toFixed(2)  + " %";
+      }
     })
     .catch((err)=>{
       console.log(err);

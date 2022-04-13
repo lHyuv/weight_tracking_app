@@ -88,14 +88,14 @@ weightRouter.route('/')
  
 })
 
-weightRouter.route('/')
+weightRouter.route('/:id')
 .put( async (req,res)=>{
     weightModel.findByIdAndUpdate(req.params.id,req.body)
     .then((result)=>{
         if(result){
             res.status(200).send({
                 error: false,
-                data: data,
+                data: result,
                 message: "Successfully updated"
             })
         }else{
@@ -115,14 +115,14 @@ weightRouter.route('/')
     })
 });
 
-weightRouter.route('/')
+weightRouter.route('/reset')
 .delete( (req,res)=>{
-    weightModel.findByIdAndUpdate(req.params.id, {"status": "Inactive"})
+    weightModel.updateMany({}, {"status": "Inactive"})
     .then((result)=>{
         if(result){
             res.status(200).send({
                 error: false,
-                data: data,
+                data: result,
                 message: "Successfully deleted"
             })
         }else{
@@ -141,5 +141,34 @@ weightRouter.route('/')
         })        
     })
 });
+
+weightRouter.route('/:id')
+.delete( (req,res)=>{
+    weightModel.findByIdAndUpdate(req.params.id, {"status": "Inactive"})
+    .then((result)=>{
+        if(result){
+            res.status(200).send({
+                error: false,
+                data: result,
+                message: "Successfully deleted"
+            })
+        }else{
+            res.status(500).send({
+                error: true,
+                data: [],
+                message: "Something went wrong"
+            })
+        }
+    })
+    .catch((err)=>{
+        res.status(500).send({
+            error: true,
+            data: [],
+            message: err
+        })        
+    })
+});
+
+
 
 module.exports = weightRouter;

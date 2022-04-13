@@ -1,21 +1,46 @@
 <template>
   <div>
     <form @submit.prevent = "compareWeight">
-    <label class = 'form-label'> Compare </label>
+   
+
+    <div class = "row">
+      <div class = "col-md-12">
+      <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseForm" role="button" aria-expanded="false" aria-controls="collapseExample">
+    Compare
+      </a>
+      </div>
+    </div>
+      <div class="collapse" id="collapseForm">
+      <div class = "row">
+        <div class = "col-md-4">
+   
     <input id = 'target_weight' class = 'form-control' type = 'number' required placeholder = "Enter target weight in kg..">
-    <button class = 'btn btn-success float-right' id = 'check_btn' > Check</button>
+         </div>
+        <div class = "col-md-3">
+       <button class = 'btn btn-success float-right' id = 'check_btn' > Check</button>
+        </div>
+       
+      </div>
+  </div>
     </form>
+
+    <hr>
     <canvas id="this_chart"></canvas>
   </div>
 </template>
 
 <script>
+//
+import "jquery/dist/jquery.min.js";
+import "@popperjs/core";
+import 'bootstrap/js/dist/collapse'; //collapse js
+//
 import "bootstrap/dist/css/bootstrap.min.css";
 import Chart from 'chart.js';
 import axios from 'axios';
 import Env from '../assets/env.js';
 import moment from 'moment';
-let apiURL = Env.baseURL;
+let apiURL = Env.baseURL + '/active';
 let labels = new Array();
 let datasets = new Array();
 let target_datasets = new Array();
@@ -83,6 +108,9 @@ export default {
      graphData: graphData
     }
   },
+  //
+  props : ["title"],
+  //
   mounted() {
     const ctx = document.getElementById('this_chart');
     new Chart(ctx, this.graphData);
@@ -101,5 +129,10 @@ export default {
 
 }
 </script>
+<style>
+a[role=button]{
+  margin: 10px;
+}
+</style>
 
 
