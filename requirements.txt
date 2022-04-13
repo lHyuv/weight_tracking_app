@@ -12,3 +12,6 @@ chart.js
 moment
 datatables.net-dt
 "@popperjs/core"
+"@meforma/vue-toaster"
+stylus-loader@3
+webpack

@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import Env from "../assets/env.js";
 import moment from "moment";
+
 export default {
   name: 'AppForm',
   data(){
@@ -27,6 +28,11 @@ export default {
         })
       }
       if(date_arr.includes(moment(new Date()).format("MMM Do YYYY"))){
+        // toast notif
+        //   this.$toast.show("message", {});
+        this.$toast.info("You already have logged this day")
+
+        //
         this.$router.push('/table')
       }
 
