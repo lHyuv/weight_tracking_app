@@ -38,6 +38,7 @@ export default {
 
     })
     .catch((err)=>{
+      this.$toast.error("Something went wrong");
       console.log(err);
     })
   },
@@ -52,9 +53,10 @@ export default {
           current_weight: '',
           log: ''
         }
-        console.log("Success")
+        this.$toast.success("Answer submitted")
       })
       .catch((err)=>{
+        this.$toast.error("Something went wrong");
         console.log(err)
       })
     }

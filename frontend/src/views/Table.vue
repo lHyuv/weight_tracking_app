@@ -66,9 +66,11 @@ export default {
      // this.$forceUpdate();
         console.log("Deleted");
         $('table').DataTable().destroy();
+        this.$toast.success("Reset success")
 
       })
       .catch((err)=>{
+        this.$toast.error("Something went wrong");
         console.log(err)
       })
     

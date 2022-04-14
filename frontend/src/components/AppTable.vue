@@ -121,6 +121,7 @@ export default {
         $('input[type=search]').css('margin','2px')
     })
     .catch((err)=>{
+      this.$toast.error("Something went wrong");
       console.log(err)
     })
   },
