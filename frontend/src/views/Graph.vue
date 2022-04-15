@@ -21,6 +21,8 @@
     <AppCard :title=title5 :value=value5></AppCard>
     </div>
     </div>
+
+       <hr>
         <form @submit.prevent = "compareWeight">
    
 
@@ -42,12 +44,14 @@
         </div>
        
       </div>
+          <AppProgressBar :value=progress :unit=unit :initial=initial_value  :target=target_value :key=progress_ctr></AppProgressBar>
   </div>
     </form>
 
-    <hr>
+ 
     <AppGraph :graphData=graphData1 :chart_id=chart_id1 :key=graphResetCtr1></AppGraph>
      <AppGraph :graphData=graphData2 :chart_id=chart_id2></AppGraph>
+     <AppGraph :graphData=graphData3 :chart_id=chart_id3></AppGraph>
   </div>
 </template>
 
@@ -57,6 +61,7 @@
 import AppHeader from '@/components/AppHeader.vue'
 import AppGraph from '@/components/AppGraph.vue'
 import AppCard from '@/components/AppCard.vue'
+import AppProgressBar from '@/components/AppProgressBar.vue'
 import Env from '../assets/env.js';
 import axios from 'axios';
 
@@ -64,17 +69,20 @@ import axios from 'axios';
 import moment from 'moment';
 import "bootstrap/dist/css/bootstrap.min.css";
 import Chart from 'chart.js';
+
 let apiURL = Env.baseURL + '/active';
 let labels = new Array();
 let datasets = new Array();
 let target_datasets = new Array();
 let month_datasets = new Array(); for(let i = 0; i < 12; i++){month_datasets.push(0);}
 let month_labels = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","OCT","NOV","DEC"];
+let status_arr = [0,0,0];
+
 axios.get(apiURL)
 .then((res)=>{
 
   
-    res.data.data.forEach((val)=>{
+    res.data.data.forEach((val,i)=>{
     labels.push(moment(val.createdAt).format('MMMM Do YYYY'));
     datasets.push(val.current_weight);
     target_datasets.push(0);
@@ -98,7 +106,20 @@ axios.get(apiURL)
     }
     }
     //
+    //
+          if(i != 0){
+          if(val.current_weight > res.data.data[i - 1].current_weight){
 
+            status_arr[0]++;
+          }else if(val.current_weight < res.data.data[i - 1].current_weight){
+           status_arr[1]++;
+          }else{
+           status_arr[2]++;
+          }
+          }
+
+       
+    //
     })
 
 })
@@ -175,13 +196,47 @@ const graphData1 = {
       }
     }
   };
+
+    const graphData3 = {
+    type: "doughnut",
+    data: {
+      labels: [`Increased`,`Decreased`,`No change`],
+      datasets: [
+        {
+          label: "Status",
+          data: status_arr,
+          backgroundColor: ["#1d7874","#f67e7d","b23a48"],
+          borderColor: "#36495d",
+          borderWidth: 3
+        },
+    
+
+        
+      ]
+    },
+    options: {
+      responsive: true,
+      lineTension: 1,
+      scales: {
+        yAxes: [
+          {
+            ticks: {
+              beginAtZero: true,
+              padding: 25
+            }
+          }
+        ]
+      }
+    }
+  };
 //
 export default {
   name: 'Graph',
   components: {
     AppHeader,
     AppGraph,
-    AppCard
+    AppCard,
+    AppProgressBar
   },
   data(){
     return {
@@ -198,9 +253,16 @@ export default {
       value5: "",
       graphData1: graphData1,
       graphData2: graphData2,
+      graphData3: graphData3,
       chart_id1: "chart1",
       chart_id2: "chart2",
-      graphResetCtr1: 0
+      chart_id3: "chart3",
+      graphResetCtr1: 0,
+      progress: 0,
+      progress_ctr: 0,
+      target_value: 0,
+      unit: " kg",
+      initial_value: 0
     }
   },
   mounted(){
@@ -240,6 +302,12 @@ export default {
       this.value4 = lost.toFixed(2) + " kg";
       if(lost && initial){
       this.value5 = (lost / initial * 100).toFixed(2) + " %";
+      this.progress_ctr=this.progress_ctr+1;
+      this.progress = current;
+      this.initial_value = initial;
+
+      this.target_value = current;
+      
       }else{
         this.value5 = (0).toFixed(2)  + " %";
       }
@@ -254,14 +322,20 @@ export default {
   methods: {
         compareWeight(){
 
+      //  this.progress = parseFloat(document.getElementById('target_weight').value) ;
+        this.target_value = parseFloat(document.getElementById('target_weight').value) ;
+        
+        this.progress_ctr=this.progress_ctr+1;
+        
         target_datasets.forEach((val,i)=>{
           target_datasets[i] = document.getElementById('target_weight').value;
         })
         this.graphResetCtr1 = this.graphResetCtr1+1;
         const ctx = document.getElementById(graphData1);
         new Chart(ctx, graphData1);
-      
-    }
+
+    },
+
   }
 
 }
