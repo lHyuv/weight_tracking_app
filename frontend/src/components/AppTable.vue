@@ -31,7 +31,7 @@ Log
 <td><b>{{weight.name}}</b></td>
 -->
 <td>{{weight.createdAt}}</td>
-<td><span :class = "weight.badge_class">{{weight.status}}</span></td>
+<td><span :class = "weight.badge_class" style = "font-size: 13px;">{{weight.status}}</span></td>
 <td>{{weight.current_weight.toFixed(2)}} kg </td>
 <td width = "40%"><i>{{weight.log}}</i></td>
 </tr>

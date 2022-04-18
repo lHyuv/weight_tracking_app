@@ -10,7 +10,7 @@
   <router-link class = "nav-link" to = "/table"> Table</router-link>
   </li>
   <li class = "nav-item">
-  <router-link class = "nav-link" to = "/graph"> Graph</router-link>
+  <router-link class = "nav-link" to = "/graph"> Results</router-link>
   </li>
   </ul>
   
@@ -23,7 +23,9 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 export default {
   name: 'AppHeader',
-
+  created(){
+     document.title = "Weight Tracking App"
+  }
 }
 </script>
 <style>

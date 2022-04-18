@@ -17,6 +17,9 @@
      <div class = "col-md-4">
     <AppCard :title=title4 :value=value4></AppCard>
     </div>
+            <div class = "col-md-4">
+    <AppCard :title=title6 :value=value6></AppCard>
+    </div>
         <div class = "col-md-4">
     <AppCard :title=title5 :value=value5></AppCard>
     </div>
@@ -37,7 +40,7 @@
       <div class = "row">
         <div class = "col-md-4">
    
-    <input id = 'target_weight' class = 'form-control' type = 'number' required placeholder = "Enter target weight in kg..">
+    <input id = 'target_weight' step = '0.01' class = 'form-control' type = 'number' required placeholder = "Enter target weight in kg..">
          </div>
         <div class = "col-md-3">
        <button class = 'btn btn-success float-right' id = 'check_btn' > Check</button>
@@ -45,6 +48,7 @@
        
       </div>
           <AppProgressBar :value=progress :unit=unit :initial=initial_value  :target=target_value :key=progress_ctr></AppProgressBar>
+          <div class="alert alert-primary" role="alert"><i> {{progress_msg}}</i></div>
   </div>
     </form>
 
@@ -120,6 +124,10 @@ axios.get(apiURL)
 
        
     //
+    });
+
+    month_datasets.forEach((val,i)=>{
+      month_datasets[i] = parseFloat(val/2);
     })
 
 })
@@ -164,7 +172,7 @@ const graphData1 = {
       }
     }
   };
-  const graphData2 = {
+  let graphData2 = {
     type: "bar",
     data: {
       labels: month_labels,
@@ -197,7 +205,7 @@ const graphData1 = {
     }
   };
 
-    const graphData3 = {
+   let graphData3 = {
     type: "doughnut",
     data: {
       labels: [`Increased`,`Decreased`,`No change`],
@@ -262,7 +270,10 @@ export default {
       progress_ctr: 0,
       target_value: 0,
       unit: " kg",
-      initial_value: 0
+      initial_value: 0,
+      progress_msg: "Set a target weight to compare",
+      title6: "Lost weight today",
+      value6: "",
     }
   },
   mounted(){
@@ -272,13 +283,13 @@ export default {
       let initial = 0;
       let current = 0;
       let lost = 0;
+      let lost_today = 0;
     axios.get(apiURL)
     .then((res)=>{
       this.Weights = res.data.data;
+       
        if(res.data.data.length > 0){
-      current = this.Weights[this.Weights.length - 1].current_weight;
-    
-     
+ current = this.Weights[this.Weights.length - 1].current_weight;
       res.data.data.map((val,i)=>{
         if(i != 0){
           if(val.current_weight > res.data.data[i - 1].current_weight){
@@ -289,8 +300,19 @@ export default {
         }else{
           initial = val.current_weight;
         }
-     
-
+        
+        if(res.data.data.length == i + 1 && 
+        moment(val.createdAt).format('MMMM Do YYYY')
+        ==
+        moment(new Date()).format('MMMM Do YYYY')
+        && res.data.data.length > 1){
+               console.log(i)
+           lost_today = val.current_weight - res.data.data[i - 1].current_weight
+      
+        }
+        else{
+          lost_today = 0;
+        }
       })
        }
      
@@ -300,17 +322,23 @@ export default {
       this.value2 = increased;
       this.value3 = decreased;
       this.value4 = lost.toFixed(2) + " kg";
-      if(lost && initial){
+      if(lost && initial && lost_today){
       this.value5 = (lost / initial * 100).toFixed(2) + " %";
       this.progress_ctr=this.progress_ctr+1;
-      this.progress = current;
+   
       this.initial_value = initial;
 
       this.target_value = current;
+  
+      this.value6 = lost_today.toFixed(2) + " kg";
+
       
       }else{
+        
         this.value5 = (0).toFixed(2)  + " %";
+        this.value6 = (0).toFixed(2) + " kg";
       }
+         this.progress = current;
     })
     .catch((err)=>{
       this.$toast.error("Something went wrong");
@@ -327,6 +355,13 @@ export default {
         
         this.progress_ctr=this.progress_ctr+1;
         
+            if(parseFloat(document.getElementById('target_weight').value) > this.progress ){
+              this.progress_msg = `You need more ${parseFloat((document.getElementById('target_weight').value) - this.progress).toFixed(2)} kg to reach your target weight.`;
+            } else if(parseFloat(document.getElementById('target_weight').value) < this.progress ){
+               this.progress_msg = `You need to lose ${(this.progress - parseFloat(document.getElementById('target_weight').value)).toFixed(2)} kg to reach your target weight.`;
+            }else{
+              this.progress_msg = `Set a better target weight to compare`
+            }
         target_datasets.forEach((val,i)=>{
           target_datasets[i] = document.getElementById('target_weight').value;
         })

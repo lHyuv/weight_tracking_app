@@ -29,10 +29,6 @@ export default {
 
 }
 </script>
-<style>
-a[role=button]{
-  margin: 10px;
-}
-</style>
+
 
 
