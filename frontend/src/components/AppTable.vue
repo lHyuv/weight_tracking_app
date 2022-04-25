@@ -58,7 +58,7 @@ export default {
     }
   },
   created(){
-    let apiURL = Env.baseURL + '/active';
+    let apiURL = Env.baseURL + '/weight/user/' + sessionStorage.getItem('user_id');
     axios.get(apiURL)
     .then((res)=>{
       console.log(res.data.data);

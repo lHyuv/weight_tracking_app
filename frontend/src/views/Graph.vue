@@ -53,7 +53,7 @@
     </form>
 
  
-    <AppGraph :graphData=graphData1 :chart_id=chart_id1 :key=graphResetCtr1></AppGraph>
+     <AppGraph :graphData=graphData1 :chart_id=chart_id1 :key=graphResetCtr1></AppGraph>
      <AppGraph :graphData=graphData2 :chart_id=chart_id2></AppGraph>
      <AppGraph :graphData=graphData3 :chart_id=chart_id3></AppGraph>
   </div>
@@ -74,7 +74,7 @@ import moment from 'moment';
 import "bootstrap/dist/css/bootstrap.min.css";
 import Chart from 'chart.js';
 
-let apiURL = Env.baseURL + '/active';
+let apiURL = Env.baseURL + '/weight/user/' + sessionStorage.getItem('user_id');
 let labels = new Array();
 let datasets = new Array();
 let target_datasets = new Array();
@@ -277,7 +277,7 @@ export default {
     }
   },
   mounted(){
-    const apiURL = Env.baseURL + '/active';
+    const apiURL = Env.baseURL + '/weight/user/' + sessionStorage.getItem('user_id');
       let increased = 0;
       let decreased = 0;
       let initial = 0;

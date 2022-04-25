@@ -1,11 +1,11 @@
 const express = require('express');
-const weightRouter = express.Router();
+const userRouter = express.Router();
 
-const weightModel = require('../models/Weight.js');
+const userModel = require('../models/User.js');
 
-weightRouter.route('/')
+userRouter.route('/')
 .get((req,res)=>{
-    weightModel.find((err,data)=>{
+    userModel.find((err,data)=>{
         if(err){
             res.status(500).send({
                 error: true,
@@ -22,9 +22,9 @@ weightRouter.route('/')
     })
 });
 
-weightRouter.route('/active')
+userRouter.route('/active')
 .get((req,res)=>{
-    weightModel.find(
+    userModel.find(
         {
             "status": "Active"
         },
@@ -45,12 +45,10 @@ weightRouter.route('/active')
     })
 });
 
-weightRouter.route('/user/:id')
+userRouter.route('/find/:username')
 .get((req,res)=>{
-    weightModel.find(
-       {
-        "user" : req.params.id
-       },
+    userModel.find(
+        {"user_name": req.params.username},
         (err,data)=>{
         if(err){
             res.status(500).send({
@@ -69,9 +67,9 @@ weightRouter.route('/user/:id')
 });
 
 
-weightRouter.route('/:id')
+userRouter.route('/:id')
 .get((req,res)=>{
-    weightModel.findById(
+    userModel.findById(
         req.params.id,
         (err,data)=>{
         if(err){
@@ -90,12 +88,13 @@ weightRouter.route('/:id')
     })
 });
 
-weightRouter.route('/')
+
+userRouter.route('/')
 .post( async (req,res)=>{
-  weightModel.create(
+  userModel.create(
       req.body,
       (err,data)=>{
-        if(err){
+        if(err){ //console.log(err)
             res.status(500).send({
                 error: true,
                 data: [],
@@ -112,9 +111,9 @@ weightRouter.route('/')
  
 })
 
-weightRouter.route('/:id')
+userRouter.route('/:id')
 .put( async (req,res)=>{
-    weightModel.findByIdAndUpdate(req.params.id,req.body)
+    userModel.findByIdAndUpdate(req.params.id,req.body)
     .then((result)=>{
         if(result){
             res.status(200).send({
@@ -139,9 +138,9 @@ weightRouter.route('/:id')
     })
 });
 
-weightRouter.route('/reset')
+userRouter.route('/reset')
 .delete( (req,res)=>{
-    weightModel.updateMany({}, {"status": "Inactive"})
+    userModel.updateMany({}, {"status": "Inactive"})
     .then((result)=>{
         if(result){
             res.status(200).send({
@@ -166,9 +165,9 @@ weightRouter.route('/reset')
     })
 });
 
-weightRouter.route('/:id')
+userRouter.route('/:id')
 .delete( (req,res)=>{
-    weightModel.findByIdAndUpdate(req.params.id, {"status": "Inactive"})
+    userModel.findByIdAndUpdate(req.params.id, {"status": "Inactive"})
     .then((result)=>{
         if(result){
             res.status(200).send({
@@ -195,4 +194,4 @@ weightRouter.route('/:id')
 
 
 
-module.exports = weightRouter;
+module.exports = userRouter;

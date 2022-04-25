@@ -59,7 +59,7 @@ export default {
     resetData(){
 
      
-      let apiURL = Env.baseURL + '/reset';
+      let apiURL = Env.baseURL + '/weight/reset';
       axios.delete(apiURL)
       .then(()=>{
       this.reset_key = this.reset_key+1;

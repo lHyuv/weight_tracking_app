@@ -11,7 +11,7 @@ export default {
       weight : {
        // name: '',
         current_weight: '',
-        log: ''
+        log: '',
       }
     }
 
@@ -19,7 +19,7 @@ export default {
   },
   created(){
     let date_arr = new Array();
-    const apiURL = Env.baseURL + "/active";
+    const apiURL = Env.baseURL + "/weight/active";
     axios.get(apiURL)
     .then((res)=>{
       if(res.data.data.length != 0){
@@ -28,12 +28,11 @@ export default {
         })
       }
       if(date_arr.includes(moment(new Date()).format("MMM Do YYYY"))){
-        // toast notif
-        //   this.$toast.show("message", {});
+   
         this.$toast.info("You already have logged this day")
 
-        //
-        this.$router.push('/table')
+     
+       this.$router.push('/table')
       }
 
     })
@@ -44,20 +43,23 @@ export default {
   },
   methods : {
     submitForm(){
-      const apiURL = Env.baseURL;
+      const apiURL = Env.baseURL + '/weight';
+
+    this.weight['user'] = sessionStorage.getItem('user_id');
+    console.log(this.weight);
       axios.post(apiURL,this.weight)
       .then(()=>{
         this.$router.push('/table');
         this.weight = {
         //  name: '',
           current_weight: '',
-          log: ''
+          log: '',
         }
         this.$toast.success("Answer submitted")
       })
       .catch((err)=>{
         this.$toast.error("Something went wrong");
-        console.log(err)
+       console.log(err)
       })
     }
   }

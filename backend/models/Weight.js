@@ -19,6 +19,11 @@ let weightSchema = new Schema({
     status: {
         type: String,
         default: "Active"
+    },
+    user: {
+        type: String,
+        ref: 'User',
+        required: [true, "User can't be empty."]
     }
 
 },
