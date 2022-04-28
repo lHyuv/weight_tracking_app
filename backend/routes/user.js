@@ -48,7 +48,7 @@ userRouter.route('/active')
 userRouter.route('/find/:username')
 .get((req,res)=>{
     userModel.find(
-        {"user_name": req.params.username},
+        {"user_name": req.params.username, 'status': 'Active'},
         (err,data)=>{
         if(err){
             res.status(500).send({

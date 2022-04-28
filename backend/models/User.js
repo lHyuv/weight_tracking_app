@@ -5,7 +5,9 @@ let userSchema = new Schema({
 
     user_name: {
         type: String,
-        required: [true, "Username can't be empty."]
+        required: [true, "Username can't be empty."],
+        unique: true
+       // unique: [true, "Username should be unique"]
     },
 
     status: {

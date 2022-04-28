@@ -26,7 +26,14 @@
              <i class="fas fa-user"></i>
          </div>
          <span>{{ username }}</span></a>
-         <div class="dropdown-divider"></div>
+        <div class="dropdown-divider"></div>
+        <router-link  tabindex="-1"  to = "/account"
+         class="dropdown-item d-flex align-items-center" >
+         <div class="mr-3" style="width: 1.25rem">
+           <i class="fas fa-cog"></i>
+       </div>
+         <span>Account</span></router-link>
+
          <a href = 'javascript:void(0);' tabindex="-1" 
          class="dropdown-item d-flex align-items-center" 
          data-bs-toggle="modal" data-bs-target="#confirmLogout" >

@@ -36,6 +36,8 @@ export default{
             sessionStorage.setItem('user_id', null);
             if(this.user.user_name.length < 8){
             this.$toast.error("Username should be more than 8 characters");
+            }else if(this.user.user_name.indexOf(' ') >= 0){
+                this.$toast.error("Username can't have whitespace")
             }else{
             axios.get(apiURL + '/find/' + this.user.user_name)
             .then((res)=>{
