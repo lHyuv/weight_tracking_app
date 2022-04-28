@@ -19,7 +19,7 @@ export default {
   },
   created(){
     let date_arr = new Array();
-    const apiURL = Env.baseURL + "/weight/active";
+    const apiURL = Env.baseURL  + '/weight/user/' + sessionStorage.getItem('user_id');
     axios.get(apiURL)
     .then((res)=>{
       if(res.data.data.length != 0){

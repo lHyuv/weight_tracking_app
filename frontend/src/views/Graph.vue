@@ -1,6 +1,37 @@
 <template>
   <div class="home">
     <AppHeader></AppHeader>
+     <form @submit.prevent = "compareWeight">
+   
+
+    <div class = "row">
+ 
+      <div class = "col-md-12">
+      <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseForm" role="button" aria-expanded="false" aria-controls="collapseExample">
+    Compare
+      </a>
+      </div>
+    </div>
+      <div class="collapse" id="collapseForm">
+       
+      <div class = "row">
+        
+        <div class = "col-md-4">
+   
+    <input id = 'target_weight' step = '0.01' class = 'form-control' type = 'number' required placeholder = "Enter target weight in kg..">
+         </div>
+        <div class = "col-md-3">
+       <button class = 'btn btn-success float-right' id = 'check_btn' > Check</button>
+        </div>
+       
+      </div>
+          <AppProgressBar :value=progress :unit=unit :initial=initial_value  :target=target_value :key=progress_ctr></AppProgressBar>
+          <div class="alert alert-primary" role="alert"><i> {{progress_msg}}</i></div>
+
+    </div>
+    </form>
+    <div class = "card card-primary">
+    <h4>Trends</h4>
     <div class = "row">
       <div class = "col-md-4">
     <AppCard :title=title1 :value=value1></AppCard>
@@ -24,38 +55,15 @@
     <AppCard :title=title5 :value=value5></AppCard>
     </div>
     </div>
-
-       <hr>
-        <form @submit.prevent = "compareWeight">
-   
-
-    <div class = "row">
-      <div class = "col-md-12">
-      <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseForm" role="button" aria-expanded="false" aria-controls="collapseExample">
-    Compare
-      </a>
-      </div>
     </div>
-      <div class="collapse" id="collapseForm">
-      <div class = "row">
-        <div class = "col-md-4">
-   
-    <input id = 'target_weight' step = '0.01' class = 'form-control' type = 'number' required placeholder = "Enter target weight in kg..">
-         </div>
-        <div class = "col-md-3">
-       <button class = 'btn btn-success float-right' id = 'check_btn' > Check</button>
-        </div>
-       
-      </div>
-          <AppProgressBar :value=progress :unit=unit :initial=initial_value  :target=target_value :key=progress_ctr></AppProgressBar>
-          <div class="alert alert-primary" role="alert"><i> {{progress_msg}}</i></div>
-  </div>
-    </form>
+     
 
- 
+      <div class = "card card-primary">
+  <h4>Graphs</h4>
      <AppGraph :graphData=graphData1 :chart_id=chart_id1 :key=graphResetCtr1></AppGraph>
      <AppGraph :graphData=graphData2 :chart_id=chart_id2></AppGraph>
      <AppGraph :graphData=graphData3 :chart_id=chart_id3></AppGraph>
+  </div>
   </div>
 </template>
 
@@ -378,5 +386,8 @@ export default {
 <style>
 a[role=button]{
   margin: 10px;
+}
+.card-primary{
+  padding:20px;
 }
 </style>

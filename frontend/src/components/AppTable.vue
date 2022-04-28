@@ -54,10 +54,12 @@ export default {
   name: 'AppTable',
   data(){
     return {
-      Weights: []
+      Weights: [],
     }
   },
   created(){
+  
+  
     let apiURL = Env.baseURL + '/weight/user/' + sessionStorage.getItem('user_id');
     axios.get(apiURL)
     .then((res)=>{
@@ -117,8 +119,13 @@ export default {
         });
 
         $('.paginate_button').css('margin','2px');
+         $('.paginate_button').attr('role','button');
+          $('.paginate_button').attr('class','btn btn-outline-secondary btn-sm');
         $('.dataTables_filter').css('margin','2px')
         $('input[type=search]').css('margin','2px')
+        $('.dataTables_filter').css('float','right');
+         $('.dataTables_length').css('float','left');
+    
     })
     .catch((err)=>{
       this.$toast.error("Something went wrong");

@@ -6,9 +6,9 @@
 <form @submit.prevent = "userForm">
   <h1>Weight Tracking App</h1>
 
-<input type = 'text' v-model = "user.user_name" id = 'username' required class = 'form-control' placeholder = "Enter any username..">
+<input type = 'text' v-model = "user.user_name" id = 'username' required class = 'form-control' placeholder = "Enter previous or new username..">
 
-<button class = 'btn btn-success float-right'> Login </button>
+<button class = 'btn btn-success float-right'> Continue </button>
 </form>
 <div class = "col-md-3">
 </div>
