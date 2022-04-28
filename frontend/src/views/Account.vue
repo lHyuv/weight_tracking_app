@@ -109,7 +109,7 @@ export default {
           <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
        </div>
         <div class = "col-md-3">
-            <button data-bs-dismiss="modal" class = "btn btn-primary" @click.prevent = "deleteAccount" > Logout</button>
+            <button data-bs-dismiss="modal" class = "btn btn-primary" @click.prevent = "deleteAccount" > Delete</button>
         </div>
     </div>
     </div>
